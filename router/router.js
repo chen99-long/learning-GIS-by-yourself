@@ -31,5 +31,8 @@ router.get('/getList', ctrl.getList)
 //储存用户投稿的路由函数
 router.post('/contribute', upload.single('cover_img'), ctrl.getContribute)
 
+//把指定索引号的投稿发布出去的路由函数
+router.post('/pub', ctrl.getPublish)
+
 // 导出路由模块
 module.exports = router

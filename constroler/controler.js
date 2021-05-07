@@ -76,12 +76,20 @@ module.exports = {
         const index = req.query.index; //接收到传递过来的索引
         //把对应索引的投稿数据给到著名院校数组最前面
         dataImg.result.college.unshift(dataContribute[index]);
+        dataContribute.splice(index, 1); //该索引号对应的数据
         //    正式的把投稿发布到在json文件中
         fs.writeFile(path.join(__dirname, '../db/data.json'), JSON.stringify(dataImg), 'utf8', function(err) {
             if (err) {
                 console.log(err.message);
             } else {
-                console.log(req.query.name + '新增了留言');
+                return
+            }
+        });
+        fs.writeFile(path.join(__dirname, '../db/contribute.json'), JSON.stringify(dataContribute), 'utf8', function(err) {
+            if (err) {
+                console.log(err.message);
+            } else {
+                return
             }
         });
         res.send('okkk');

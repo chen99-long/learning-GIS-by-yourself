@@ -20,6 +20,7 @@ app.use(router);
 
 
 app.use('/images', express.static('images')) //=>把服务器端的images图片库挂载到服务器
+app.use('/uploads', express.static('uploads')) //=>把服务器端的images图片库挂载到服务器
 app.use('/gdata', express.static('gdata')) //=>把服务器端的gdata地理数据挂载到服务器
 app.use('/', express.static('../GIS自主学习网')) // => 把GIS前端网站挂载到服务器
 

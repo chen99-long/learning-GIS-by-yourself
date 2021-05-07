@@ -32,7 +32,12 @@ router.get('/getList', ctrl.getList)
 router.post('/contribute', upload.single('cover_img'), ctrl.getContribute)
 
 //把指定索引号的投稿发布出去的路由函数
-router.post('/pub', ctrl.getPublish)
+router.post('/Pub', ctrl.getPublish)
 
-// 导出路由模块
+//获取用户投稿的路由函数
+router.get('/getContribute', ctrl.getConlist)
+
+//把指定索引号的投稿删除的路由函数
+router.post('/Del', ctrl.getDel)
+    // 导出路由模块
 module.exports = router

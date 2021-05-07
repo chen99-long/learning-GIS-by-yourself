@@ -14,7 +14,7 @@ module.exports = {
         // console.log(req.body);
         let obj = {}
         Object.assign(obj, req.body);
-        obj.img = req.file.path;
+        obj.img = 'http://localhost:3001/uploads/' + req.file.filename;
         obj.info = obj.nickname + ' · 2021年05月8日 · book'
         dataContribute.unshift(obj);
         //    正式的把投稿保存在json文件中
@@ -70,12 +70,24 @@ module.exports = {
         res.json(dataImg);
     },
 
+    //获取投稿内容
+    getConlist: (req, res) => {
+        res.json(dataContribute);
+    },
+
     //把指定索引的投稿发布出去
     getPublish: (req, res) => {
         //此时接收到一个通过查询字符串传过来的索引号，这里用req.query接收
         const index = req.query.index; //接收到传递过来的索引
-        //把对应索引的投稿数据给到著名院校数组最前面
-        dataImg.result.college.unshift(dataContribute[index]);
+        const type = req.query.type; //接收到类目
+        // 加个if判断，如果类目是3，则发布到图书数组中
+        if (type == '3') {
+            //把对应索引的投稿数据给到书籍数组最前面
+            dataImg.result.book.unshift(dataContribute[index]);
+        } else { //把对应索引的投稿数据给到著名院校数组最前面
+            dataImg.result.college.unshift(dataContribute[index]);
+        }
+
         dataContribute.splice(index, 1); //该索引号对应的数据
         //    正式的把投稿发布到在json文件中
         fs.writeFile(path.join(__dirname, '../db/data.json'), JSON.stringify(dataImg), 'utf8', function(err) {
@@ -85,6 +97,20 @@ module.exports = {
                 return
             }
         });
+        fs.writeFile(path.join(__dirname, '../db/contribute.json'), JSON.stringify(dataContribute), 'utf8', function(err) {
+            if (err) {
+                console.log(err.message);
+            } else {
+                return
+            }
+        });
+        res.send('okkk');
+    },
+
+    //把指定索引号的投稿删除的函数
+    getDel: (req, res) => {
+        const index = req.query.index; //接收到传递过来的索引
+        dataContribute.splice(index, 1); //该索引号对应的数据
         fs.writeFile(path.join(__dirname, '../db/contribute.json'), JSON.stringify(dataContribute), 'utf8', function(err) {
             if (err) {
                 console.log(err.message);

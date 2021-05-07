@@ -243,6 +243,15 @@
             }
         ],
         "book": [{
+                "nickname": "小陈",
+                "type": "3",
+                "name": "三国演义",
+                "action": "www.baidu.com",
+                "cause": "如果三国时期有GIS系统将会怎样？",
+                "img": "http://localhost:3001/uploads/1620374133560.png",
+                "info": "小陈 · 2021年05月8日 · book"
+            },
+            {
                 "id": "1",
                 "action": "http://product.m.dangdang.com/28550818.html?unionid=P-120510695m-:-dd_3",
                 "name": "「GIS书籍」分享一本非常全面的supermap实验教程",

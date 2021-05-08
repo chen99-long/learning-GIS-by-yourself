@@ -7,6 +7,85 @@ const dataContribute = require('../db/contribute.json')
 const data = require('../db/advice.json')
 const fs = require('fs');
 const path = require('path');
+
+// 封装一个函数，把缓存中的数据保存到真实的jaon数据中。用法：输入参数，即保存该内容
+function saveJson(data) {
+    let url = '';
+    switch (data) {
+        case dataContribute:
+            url = '../db/contribute.json';
+            break;
+        case data:
+            url = '../db/advice.json';
+            break;
+        case dataImg:
+            url = '../db/data.json'
+            break;
+    };
+    //    正式的把数据保存在json文件中
+    fs.writeFile(path.join(__dirname, url), JSON.stringify(data), 'utf8', function(err) {
+        if (err) {
+            console.log(err.message);
+        } else {
+            console.log('okk');
+        }
+    });
+}
+
+/* function saveJson(db) {
+    let url = '';
+    if (db == 'dataContribute') {
+        url = '../db/contribute.json';
+    } else if (db == 'data') {
+        url = '../db/advice.json';
+    } else if (db == 'dataImg') {
+        url = '../db/data.json'
+    }
+    //    正式的把数据保存在json文件中
+    fs.writeFile(path.join(__dirname, url), JSON.stringify(db), 'utf8', function(err) {
+        if (err) {
+            console.log(err.message);
+        } else {
+            console.log('okk');
+        }
+    });
+} */
+
+
+// 封装函数，通过获取到的type值，判断对应的是哪个文件数组
+function getType(type) {
+    let key = '';
+
+    switch (type) {
+        case '0':
+            key = 'college';
+            break;
+        case '1':
+            key = 'note';
+            break;
+        case '2':
+            key = 'video';
+            break;
+        case '3':
+            key = 'book';
+            break;
+        case '4':
+            key = 'data';
+            break;
+        case '5':
+            key = 'job';
+            break;
+        default:
+            key = 'error'
+    }
+    return key;
+}
+
+
+// ---------------------------------------------------------以上是函数区域，请勿打扰--------------------------------------------------------------
+
+
+
 module.exports = {
     //获取投稿的业务逻辑
     getContribute: (req, res) => {
@@ -18,13 +97,7 @@ module.exports = {
         obj.info = obj.nickname + ' · 2021年05月8日 · book'
         dataContribute.unshift(obj);
         //    正式的把投稿保存在json文件中
-        fs.writeFile(path.join(__dirname, '../db/contribute.json'), JSON.stringify(dataContribute), 'utf8', function(err) {
-            if (err) {
-                console.log(err.message);
-            } else {
-                console.log(req.body.nickname + '投稿了');
-            }
-        });
+        saveJson(dataContribute);
     },
     // 请求根目录业务逻辑
     getSorry: (req, res) => {
@@ -56,13 +129,14 @@ module.exports = {
         }
 
         //    正式的把留言保存在json文件中
-        fs.writeFile(path.join(__dirname, '../db/advice.json'), JSON.stringify(data), 'utf8', function(err) {
-            if (err) {
-                console.log(err.message);
-            } else {
-                console.log(req.query.name + '新增了留言');
-            }
-        });
+        /*         fs.writeFile(path.join(__dirname, '../db/advice.json'), JSON.stringify(data), 'utf8', function(err) {
+                    if (err) {
+                        console.log(err.message);
+                    } else {
+                        console.log(req.query.name + '新增了留言');
+                    }
+                }); */
+        saveJson(data);
     },
     // 获取全部逻辑接口
     // http://127.0.0.1:3001/getAllCourse
@@ -80,16 +154,24 @@ module.exports = {
         //此时接收到一个通过查询字符串传过来的索引号，这里用req.query接收
         const index = req.query.index; //接收到传递过来的索引
         const type = req.query.type; //接收到类目
-        // 加个if判断，如果类目是3，则发布到图书数组中
-        if (type == '3') {
-            //把对应索引的投稿数据给到书籍数组最前面
-            dataImg.result.book.unshift(dataContribute[index]);
-        } else { //把对应索引的投稿数据给到著名院校数组最前面
-            dataImg.result.college.unshift(dataContribute[index]);
-        }
-
-        dataContribute.splice(index, 1); //该索引号对应的数据
+        /*         // 加个if判断，如果类目是3，则发布到图书数组中
+                if (type == '3') {
+                    //把对应索引的投稿数据给到书籍数组最前面
+                    dataImg.result.book.unshift(dataContribute[index]);
+                } else { //把对应索引的投稿数据给到著名院校数组最前面
+                    dataImg.result.college.unshift(dataContribute[index]);
+                } */
+        let key = getType(type);
+        // console.log("123", key);
+        // console.log(dataImg.result[key]); //
+        // console.log(dataImg.result.book);//ok
+        dataImg.result[key].unshift(dataContribute[index]);
+        dataContribute.splice(index, 1); //删除投稿列表中该索引号对应的数据
         //    正式的把投稿发布到在json文件中
+
+
+        // saveJson(dataImg);
+        // saveJson(dataContribute);
         fs.writeFile(path.join(__dirname, '../db/data.json'), JSON.stringify(dataImg), 'utf8', function(err) {
             if (err) {
                 console.log(err.message);
@@ -111,13 +193,7 @@ module.exports = {
     getDel: (req, res) => {
         const index = req.query.index; //接收到传递过来的索引
         dataContribute.splice(index, 1); //该索引号对应的数据
-        fs.writeFile(path.join(__dirname, '../db/contribute.json'), JSON.stringify(dataContribute), 'utf8', function(err) {
-            if (err) {
-                console.log(err.message);
-            } else {
-                return
-            }
-        });
+        saveJson(dataContribute);
         res.send('okkk');
     },
     //获取所有留言的函数
@@ -128,13 +204,7 @@ module.exports = {
     delAdvice: (req, res) => {
         const index = req.query.index;
         data.splice(index, 1); //删除该索引所对应的数组
-        fs.writeFile(path.join(__dirname, '../db/advice.json'), JSON.stringify(data), 'utf8', function(err) {
-            if (err) {
-                console.log(err.message);
-            } else {
-                return
-            }
-        });
+        saveJson(data);
         res.send('okkk');
     }
 

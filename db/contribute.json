@@ -1,1 +1,9 @@
-[{"nickname":"qqq","type":"0","name":"qwqw","action":"qqq","cause":"qqqq","img":"http://localhost:3001/uploads/1620463028162.png","info":"qqq · 2021年05月8日 · book"},{"nickname":"123","type":"0","name":"1","action":"1","cause":"1","img":"http://localhost:3001/uploads/1620462962439.png","info":"123 · 2021年05月8日 · book"},{"nickname":"陈大龙","type":"3","name":"三国演义","action":"www.baidu.com","cause":"真是一本好书呢！！！","img":"http://localhost:3001/uploads/1620462150852.png","info":"陈大龙 · 2021年05月8日 · book"},{"id":"15","type":1,"action":"https://baike.baidu.com/item/%E6%AD%A6%E6%B1%89%E5%A4%A7%E5%AD%A6/106709?fr=aladdin","name":"「GIS院校」武汉大学 GIS实力强劲的大学","cause":"分享一所GIS专业排名第一的大学","info":"Chenlong · 2020年03月21日 · GIS院校","img":"http://127.0.0.1:3001/images/wuhan.jpg"},{"id":"1","type":1,"action":"https://baike.baidu.com/item/%E5%8C%97%E5%8D%8E%E8%88%AA%E5%A4%A9%E5%B7%A5%E4%B8%9A%E5%AD%A6%E9%99%A2/6318267?fr=aladdin","name":"「GIS院校」北华航天工业学院（小编最心爱的母校哦！）","cause":"强烈推荐！本学长心目中最最最伟大的母校，具有非常舒适的学习环境","info":"Chenlong · 2020年03月21日 · GIS院校","img":"http://127.0.0.1:3001/images/huahang.jpg"}]
+[{
+    "id": "15",
+    "type": 1,
+    "action": "https://baike.baidu.com/item/%E6%AD%A6%E6%B1%89%E5%A4%A7%E5%AD%A6/106709?fr=aladdin",
+    "name": "「GIS院校」武汉大学 GIS实力强劲的大学",
+    "cause": "分享一所GIS专业排名第一的大学",
+    "info": "Chenlong · 2020年03月21日 · GIS院校",
+    "img": "http://127.0.0.1:3001/images/wuhan.jpg"
+}]

@@ -45,5 +45,8 @@ router.post('/Del', ctrl.getDel)
 
 //把指定索引号的留言删除的路由函数
 router.post('/delAdvice', ctrl.delAdvice)
-    // 导出路由模块
+
+//把指定索引号的数据内容删除的路由函数
+router.post('/delData', ctrl.delData);
+// 导出路由模块
 module.exports = router

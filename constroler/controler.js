@@ -91,13 +91,16 @@ module.exports = {
     getContribute: (req, res) => {
 
         // console.log(req.body);
-        let obj = {}
-        Object.assign(obj, req.body);
+        let obj = JSON.parse(JSON.stringify(req.body));
         obj.img = 'http://localhost:3001/uploads/' + req.file.filename;
         obj.info = obj.nickname + ' · 2021年05月8日 · book'
+        console.log(obj);
+        console.log(dataContribute);
         dataContribute.unshift(obj);
         //    正式的把投稿保存在json文件中
+        console.log(dataContribute);
         saveJson(dataContribute);
+
     },
     // 请求根目录业务逻辑
     getSorry: (req, res) => {
@@ -194,6 +197,23 @@ module.exports = {
         const index = req.query.index; //接收到传递过来的索引
         dataContribute.splice(index, 1); //该索引号对应的数据
         saveJson(dataContribute);
+        res.send('okkk');
+    },
+
+    //把指定索引号的数据删除的函数
+    delData: (req, res) => {
+        const index = req.query.index; //接收到传递过来的索引
+        const type = req.query.type; //接收到类目
+        const key = getType(type); //解译当前类目所对应的数组
+        dataImg.result[key].splice(index, 1); //删除该数组指定索引的数据
+        //写入到数据中
+        fs.writeFile(path.join(__dirname, '../db/data.json'), JSON.stringify(dataImg), 'utf8', function(err) {
+            if (err) {
+                console.log(err.message);
+            } else {
+                return
+            }
+        });
         res.send('okkk');
     },
     //获取所有留言的函数

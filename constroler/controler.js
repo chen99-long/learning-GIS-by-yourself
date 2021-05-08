@@ -48,7 +48,7 @@ module.exports = {
         advice.tel = req.query.tel;
         advice.content = req.query.content;
 
-        data.push(advice); //把搞定好的对象保存在advice.json中   但是此时只是保存了缓存
+        data.unshift(advice); //把搞定好的对象保存在advice.json中   但是此时只是保存了缓存
 
         //补零函数
         function getZero(num) {
@@ -112,6 +112,23 @@ module.exports = {
         const index = req.query.index; //接收到传递过来的索引
         dataContribute.splice(index, 1); //该索引号对应的数据
         fs.writeFile(path.join(__dirname, '../db/contribute.json'), JSON.stringify(dataContribute), 'utf8', function(err) {
+            if (err) {
+                console.log(err.message);
+            } else {
+                return
+            }
+        });
+        res.send('okkk');
+    },
+    //获取所有留言的函数
+    getAdvice: (req, res) => {
+        res.json(data)
+    },
+    //删除指定索引号的留言的函数
+    delAdvice: (req, res) => {
+        const index = req.query.index;
+        data.splice(index, 1); //删除该索引所对应的数组
+        fs.writeFile(path.join(__dirname, '../db/advice.json'), JSON.stringify(data), 'utf8', function(err) {
             if (err) {
                 console.log(err.message);
             } else {

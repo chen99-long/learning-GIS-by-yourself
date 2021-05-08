@@ -37,7 +37,13 @@ router.post('/Pub', ctrl.getPublish)
 //获取用户投稿的路由函数
 router.get('/getContribute', ctrl.getConlist)
 
+//获取用户留言的路由函数
+router.get('/getAdvice', ctrl.getAdvice)
+
 //把指定索引号的投稿删除的路由函数
 router.post('/Del', ctrl.getDel)
+
+//把指定索引号的留言删除的路由函数
+router.post('/delAdvice', ctrl.delAdvice)
     // 导出路由模块
 module.exports = router

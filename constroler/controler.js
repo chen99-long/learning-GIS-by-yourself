@@ -87,18 +87,16 @@ function getType(type) {
 
 
 module.exports = {
-    //获取投稿的业务逻辑
+    //客户端提交投稿的业务逻辑
     getContribute: (req, res) => {
 
         // console.log(req.body);
         let obj = JSON.parse(JSON.stringify(req.body));
         obj.img = 'http://localhost:3001/uploads/' + req.file.filename;
         obj.info = obj.nickname + ' · 2021年05月8日 · book'
-        console.log(obj);
-        console.log(dataContribute);
+
         dataContribute.unshift(obj);
         //    正式的把投稿保存在json文件中
-        console.log(dataContribute);
         saveJson(dataContribute);
 
     },

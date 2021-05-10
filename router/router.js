@@ -20,6 +20,7 @@ const upload = multer({
     // 导入业务处理模块
 const ctrl = require('../constroler/controler.js')
 
+
 // sorry的路由函数
 router.get('/sorry', ctrl.getSorry)
 
@@ -48,5 +49,10 @@ router.post('/delAdvice', ctrl.delAdvice)
 
 //把指定索引号的数据内容删除的路由函数
 router.post('/delData', ctrl.delData);
+
+//两个路由函数，addVisitor：新增一访客；  addAdvice：更新当前留言数量
+router.get('/addVisitor', ctrl.addVisitor);
+router.get('/addAdvice', ctrl.addAdvice);
+
 // 导出路由模块
 module.exports = router

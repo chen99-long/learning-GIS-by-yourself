@@ -5,6 +5,7 @@ const { get } = require('http');
 const dataImg = require('../db/data.json')
 const dataContribute = require('../db/contribute.json')
 const data = require('../db/advice.json')
+const num = require('../db/num.json');
 const fs = require('fs');
 const path = require('path');
 
@@ -81,6 +82,16 @@ function getType(type) {
     return key;
 }
 
+function saveNum() {
+    //写入到数据中
+    fs.writeFile(path.join(__dirname, '../db/num.json'), JSON.stringify(num), 'utf8', function(err) {
+        if (err) {
+            console.log(err.message);
+        } else {
+            return
+        }
+    });
+}
 
 // ---------------------------------------------------------以上是函数区域，请勿打扰--------------------------------------------------------------
 
@@ -224,6 +235,23 @@ module.exports = {
         data.splice(index, 1); //删除该索引所对应的数组
         saveJson(data);
         res.send('okkk');
-    }
+    },
+
+    //每次请求都让访客数量+1
+    addVisitor: (req, res) => {
+        num.allvisitors++;
+        num.newvisitors++;
+        saveNum();
+        res.send('okk');
+    },
+    // 每次请求都更新当前留言数量
+    addAdvice: (req, res) => {
+        num.alladvices = data.length;
+        num.newadvices = num.alladvices - 2;
+        saveNum();
+        res.json(num);
+    },
+
+
 
 }

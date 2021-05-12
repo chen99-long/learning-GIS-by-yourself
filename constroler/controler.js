@@ -166,24 +166,9 @@ module.exports = {
         //此时接收到一个通过查询字符串传过来的索引号，这里用req.query接收
         const index = req.query.index; //接收到传递过来的索引
         const type = req.query.type; //接收到类目
-        /*         // 加个if判断，如果类目是3，则发布到图书数组中
-                if (type == '3') {
-                    //把对应索引的投稿数据给到书籍数组最前面
-                    dataImg.result.book.unshift(dataContribute[index]);
-                } else { //把对应索引的投稿数据给到著名院校数组最前面
-                    dataImg.result.college.unshift(dataContribute[index]);
-                } */
         let key = getType(type);
-        // console.log("123", key);
-        // console.log(dataImg.result[key]); //
-        // console.log(dataImg.result.book);//ok
         dataImg.result[key].unshift(dataContribute[index]);
         dataContribute.splice(index, 1); //删除投稿列表中该索引号对应的数据
-        //    正式的把投稿发布到在json文件中
-
-
-        // saveJson(dataImg);
-        // saveJson(dataContribute);
         fs.writeFile(path.join(__dirname, '../db/data.json'), JSON.stringify(dataImg), 'utf8', function(err) {
             if (err) {
                 console.log(err.message);

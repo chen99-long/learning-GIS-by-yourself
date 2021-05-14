@@ -54,5 +54,7 @@ router.post('/delData', ctrl.delData);
 router.get('/addVisitor', ctrl.addVisitor);
 router.get('/addAdvice', ctrl.addAdvice);
 
+//数据的修改功能
+router.post('/edit', ctrl.editData);
 // 导出路由模块
 module.exports = router

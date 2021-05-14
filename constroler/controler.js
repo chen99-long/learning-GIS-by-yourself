@@ -136,8 +136,8 @@ module.exports = {
         data.unshift(advice); //把搞定好的对象保存在advice.json中   但是此时只是保存了缓存
 
         //补零函数
-        function getZero(num) {
-            return num > 9 ? num : '0' + num;
+        function getZero(n) {
+            return n > 9 ? n : '0' + n;
         }
 
         //    正式的把留言保存在json文件中
@@ -236,6 +236,24 @@ module.exports = {
         saveNum();
         res.json(num);
     },
+
+    //数据的修改功能
+    editData: (req, res) => {
+        const key = getType(req.body.type); //解译当前类目所对应的数组
+        const obj = JSON.parse(JSON.stringify(req.body.obj)) //洗一下对象
+        dataImg.result[key][obj.index].name = obj.name;
+        dataImg.result[key][obj.index].cause = obj.cause;
+        dataImg.result[key][obj.index].action = obj.action;
+        //写入到数据中
+        fs.writeFile(path.join(__dirname, '../db/data.json'), JSON.stringify(dataImg), 'utf8', function(err) {
+            if (err) {
+                console.log(err.message);
+            } else {
+                return
+            }
+        });
+        res.send('okkk');
+    }
 
 
 
